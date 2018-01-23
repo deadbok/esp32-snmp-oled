@@ -1,6 +1,0 @@
-CPU: 8%
-Used mem: 3124M
-home/ free: 18G
-Disk : 1t/s
-Wired: 0.00%
-Wifi: 0.00%
