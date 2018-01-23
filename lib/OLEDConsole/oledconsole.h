@@ -22,12 +22,10 @@
 class OLEDConsole
 {
   private:
-    void draw_buffer();
     int scroll();
 
   protected:
-    unsigned char current_line = 0;
-    unsigned char current_pos = 0;
+    unsigned int current_pos = 0;
     unsigned char buffer[OLED_LINES * OLED_CHARS_LINE];
   
   public:
@@ -36,6 +34,7 @@ class OLEDConsole
     OLEDConsole();
     void init();
     void puts(String str);
+    void draw_buffer();
 };
 
 #endif

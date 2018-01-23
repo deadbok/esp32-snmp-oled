@@ -50,24 +50,24 @@ int OLEDConsole::scroll()
     unsigned char tbuffer[OLED_LINES * OLED_CHARS_LINE];
     unsigned int i = 0;
 
-    //memcpy(tbuffer, this->buffer, OLED_CHARS_ALL);
-    for (i = 0; i < OLED_CHARS_ALL; i++)
+    memcpy(tbuffer, this->buffer, OLED_CHARS_ALL);
+/*     for (i = 0; i < OLED_CHARS_ALL; i++)
     {
         tbuffer[i] = this->buffer[i];
-    }
+    } */
 
-    //memcpy(this->buffer, tbuffer + OLED_CHARS_LINE, OLED_CHARS_ALL - OLED_CHARS_LINE);
-    for (i = OLED_CHARS_LINE; i < OLED_CHARS_ALL; i++)
+    memcpy(this->buffer, tbuffer + OLED_CHARS_LINE, OLED_CHARS_ALL - OLED_CHARS_LINE);
+/*     for (i = OLED_CHARS_LINE; i < OLED_CHARS_ALL; i++)
     {
         this->buffer[i - OLED_CHARS_LINE] = tbuffer[i];
-    }
+    } */
 
-    //memset(this->buffer + (OLED_CHARS_ALL - OLED_CHARS_LINE), 0, OLED_CHARS_LINE);
-    for (i = OLED_CHARS_ALL - OLED_CHARS_LINE; i < OLED_CHARS_ALL; i++)
+    memset(this->buffer + (OLED_CHARS_ALL - OLED_CHARS_LINE), 0, OLED_CHARS_LINE);
+/*     for (i = OLED_CHARS_ALL - OLED_CHARS_LINE; i < OLED_CHARS_ALL; i++)
     {
         this->buffer[i] = ' ';
-    }
-    this->draw_buffer();
+    } */
+    //this->draw_buffer();
     
     return(OLED_CHARS_ALL - OLED_CHARS_LINE);
 }
@@ -75,8 +75,8 @@ int OLEDConsole::scroll()
 void OLEDConsole::puts(String str)
 {
 
-    unsigned char i_src = 0;
-    unsigned char i_dst = this->current_pos;
+    unsigned int i_src = 0;
+    unsigned int i_dst = this->current_pos;
 
     // Keep adding characters from the input until we're through.
     while (i_src < str.length())
@@ -103,5 +103,5 @@ void OLEDConsole::puts(String str)
     }
     this->current_pos = i_dst;
 
-    this->draw_buffer();
+    //this->draw_buffer();
 }

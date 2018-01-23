@@ -16,8 +16,9 @@ const char *ssid = WIFI_SSID;
 const char *password = WIFI_PASSWD;
 
 const char *udpAddress = "192.168.0.70";
-const int udpPort = 1610;
+const int udpPort = 6060;
 WiFiUDP udp;
+char packet_buffer[16384];
 
 boolean connected = false;
 
@@ -37,6 +38,7 @@ void wifi_event(WiFiEvent_t event)
                       WiFi.localIP()[2],
                       WiFi.localIP()[3]);
         console.puts("WiFi connected\n");
+        udp.begin(udpPort);
         connected = true;
         break;
     case SYSTEM_EVENT_STA_DISCONNECTED:
@@ -88,7 +90,16 @@ void loop()
             //udp.beginPacket(udpAddress,udpPort);
             //udp.printf("Seconds since boot: %u", uptime);
             //udp.endPacket();
-            console.puts((char *)("."));
+            udp.parsePacket();
+            //receive response from server, it will be HELLO WORLD
+            if(udp.read(packet_buffer, 16384) > 0)
+            {
+                Serial.print("Server to client: ");
+                Serial.println((char *)packet_buffer);
+            }
+            console.puts((char *)packet_buffer);
+            memset(packet_buffer, 0, 16384);
         }
+        console.draw_buffer();
     }
 }
